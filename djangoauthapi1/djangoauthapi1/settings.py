@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta # added
+# added
+from datetime import timedelta 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -88,8 +90,7 @@ DATABASES = {
 }
 # added jwt
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-      
+    'DEFAULT_AUTHENTICATION_CLASSES': (  
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
@@ -133,7 +134,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+#added
+AUTH_USER_MODEL = 'account.User' # to use custom user. here User name is taken from models.py custom user
 # added JWT Settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
