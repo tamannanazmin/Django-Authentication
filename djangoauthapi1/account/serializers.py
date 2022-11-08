@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from account.models import User
-
+from xml.dom import ValidationErr
+from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -51,3 +54,22 @@ class UserChangePasswordSerializer(serializers.Serializer):
     user.set_password(password)
     user.save()
     return attrs
+
+class SendPasswordResetEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length = 255)
+    class Meta:
+        fields = ['email']
+    
+    def validate(self, attrs):
+       email = attrs.get('email')
+       if User.objects.filter(email = email).exists():
+        user = User.objects.get(email = email)
+        uid = urlsafe_base64_encode(force_bytes(user.id))
+        print('Encoded UID: ', uid)
+        token = PasswordResetTokenGenerator().make_token(user)
+        print('Password Reset Token', token)
+        link = 'http://127.0.0.1:8000/reset/'+uid+'/'+token
+        print('Password Reset Link', link)
+        return attrs
+       else:
+        raise ValidationErr('You are not a Registered User')
