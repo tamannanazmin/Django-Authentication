@@ -155,6 +155,9 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
 }
+#added (time fix kora reset password er jonno)
+
+PASSWORD_RESET_TIMEOUT = 900  # 900 SEC =15 MINUTE
 # added
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
