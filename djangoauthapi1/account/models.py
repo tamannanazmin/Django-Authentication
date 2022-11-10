@@ -4,9 +4,7 @@ from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 #  Custom User Manager
 class UserManager(BaseUserManager):
   def create_user(self, email, name, tc, password=None, password2 = None):
-      """
-      Creates and saves a User with the given email, name, tc and password.
-      """
+     
       if not email:
           raise ValueError('User must have an email address')
 
@@ -20,10 +18,19 @@ class UserManager(BaseUserManager):
       user.save(using=self._db)
       return user
 
+  '''def create_system_admin(self, email, name, tc, password=None):
+      user = self.create_user(email, name, tc, password)
+      user.is_system_admin = True
+      user.save(using = self._db)
+      return user
+  def create_system_admin(self, email, name, tc, password=None):
+      user = self.create_user(email, name, tc, password)
+      user.is_engineer = True
+      user.save(using = self._db)
+      return user
+    '''
+
   def create_superuser(self, email, name, tc, password=None):
-      """
-      Creates and saves a superuser with the given email, name, tc and password.
-      """
       user = self.create_user(
           email,
           password=password,
@@ -45,6 +52,9 @@ class User(AbstractBaseUser):
   tc = models.BooleanField()
   is_active = models.BooleanField(default=True)
   is_admin = models.BooleanField(default=False)
+  #is_system_admin = models.BooleanField(default = False)
+  #is_engineer = models.BooleanField(default = False)
+
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

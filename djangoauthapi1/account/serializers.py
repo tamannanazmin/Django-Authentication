@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from account.utils import Util
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    # We are wirting this because we need to confirm password field in our Registration Request
+# We are wirting this because we need to confirm password field in our Registration Request
     password2 = serializers.CharField(style={'input_type':'password'}, write_only = True)
     class Meta:
         model = User
@@ -55,32 +55,6 @@ class UserChangePasswordSerializer(serializers.Serializer):
     user.save()
     return attrs
 
-'''class SendPasswordResetEmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(max_length = 255)
-    class Meta:
-        fields = ['email']
-    
-    def validate(self, attrs):
-       email = attrs.get('email')
-       if User.objects.filter(email = email).exists():
-        user = User.objects.get(email = email)
-        uid = urlsafe_base64_encode(force_bytes(user.id))
-        print('Encoded UID: ', uid)
-        token = PasswordResetTokenGenerator().make_token(user)
-        print('Password Reset Token', token)
-        link = 'http://localhost:3000/reset/'+uid+'/'+token
-        print('Password Reset Link', link)
-        body = 'Click Following Link to Reset Your Password'+link
-        data = {
-            'subject' : 'Reset Your Password',
-            'body' : body, 
-            'to_email' : user.email
-        }
-        Util.send_email(data)
-        return attrs
-       else:
-        raise ValidationErr('You are not a Registered User')'''
-
 class SendPasswordResetEmailSerializer(serializers.Serializer):
   email = serializers.EmailField(max_length=255)
   class Meta:
@@ -96,14 +70,14 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
       print('Password Reset Token', token)
       link = 'http://localhost:3000/api/user/reset/'+uid+'/'+token
       print('Password Reset Link', link)
-      # Send EMail
+      ''' # Send EMail
       body = 'Click Following Link to Reset Your Password '+link
       data = {
         'subject':'Reset Your Password',
         'body':body,
         'to_email':user.email
       }
-      # Util.send_email(data)
+      # Util.send_email(data)'''
       return attrs
     else:
       raise serializers.ValidationError('You are not a Registered User')

@@ -9,3 +9,69 @@ urlpatterns = [
     path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name = 'reset-password'),
 
 ]
+'''
+for register/ api
+type: post
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+body: {
+    "email" : "naz10@gmail.com",
+    "name" : "naznin10",
+    "password" : "123456",
+    "password2" : "123456",
+    "tc" : "True"
+}
+
+
+for login/ api
+type: post
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+body: {
+    "email" : "tamanna.naz98@gmail.com",
+    "password" : "123456"
+}
+
+
+for profile/ api
+type: get
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+2. KEY: Authorization
+   VALUE: Bearer Token
+
+
+for changepassword/ api
+type: post
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+2. KEY: Authorization
+   VALUE: Bearer Token
+body: {
+    "password" : "new",
+    "password2" : "new"
+}
+
+for send-reset-password-email/ api
+type: post
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+body: {
+    "email" : "tamanna.naz98@gmail.com"
+}
+
+for reset-password/<uid>/<token>/ api
+type: post
+Headers: 
+1. KEY: Accept  
+   VALUE: application/json
+body: {
+    "password" : "123456",
+    "password2" : "123456"
+}
+'''
